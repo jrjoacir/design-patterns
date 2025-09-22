@@ -9,4 +9,8 @@ class MotorcycleTransport < Transport
     }
     super(params)
   end
+
+  def tracking
+    'Motorcycle tracking'
+  end
 end

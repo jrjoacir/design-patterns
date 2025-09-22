@@ -1,5 +1,5 @@
 class MotorcycleFactory < TransportFactory
-  def create(driver, transport_identify)
+  def create
     MotorcycleTransport.new(driver, transport_identify)
   end
 end

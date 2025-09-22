@@ -37,7 +37,7 @@ class Transport
   end
 
   def tracking
-    'Delivery tracking'
+    raise 'Nor implemented!'
   end
 
   private
