@@ -28,12 +28,12 @@ class Transport
   end
 
   def start_delivery
-    delivery_status = :started
+    self.delivery_status = :started
   end
 
   def add_load(load)
-    loads.push(load)
-    loads
+    self.loads.push(load)
+    self.loads
   end
 
   def tracking
