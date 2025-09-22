@@ -20,32 +20,31 @@ require_relative '../../factory_method/challenge/factories/pix_payment_method_fa
 module Main
   class << self
     def pix
-      PixPaymentMethodFactory.new(200, 'pix@xip.com.br').create
+      PixPaymentMethodFactory.new(200, 'pix@xip.com.br')
     end
 
     def credit_card
-      CreditCardPaymentMethodFactory.new(250, '12345-6789').create
+      CreditCardPaymentMethodFactory.new(250, '12345-6789')
     end
 
     def bill
-      BillPaymentMethodFactory.new(1950, 'abcd-efgh-ijlm').create
+      BillPaymentMethodFactory.new(1950, 'abcd-efgh-ijlm')
     end
   end
 end
 
 pix = Main.pix
-puts pix.status
+puts pix.to_h
 puts pix.confirm
-puts pix.status
-puts
-
-credit_card = Main.credit_card
-puts credit_card.status
-puts credit_card.confirm
-puts credit_card.status
+puts pix.to_h
 puts
 
 bill = Main.bill
-puts bill.status
-#puts bill.confirm
-puts bill.status
+puts bill.to_h
+puts bill.confirm
+puts bill.to_h
+puts
+
+credit_card = Main.credit_card
+puts credit_card.to_h
+puts

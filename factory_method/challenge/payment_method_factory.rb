@@ -13,6 +13,19 @@ class PaymentMethodFactory
     payment.confirm
   end
 
+  def to_h
+    {
+      value: payment.value,
+      payment_id: payment.payment_id,
+      doc_payment: payment.doc_payment,
+      tax: payment.tax,
+      expiration_date: payment.expiration_date,
+      total_value: payment.total_value,
+      payed_value: payment.payed_value,
+      status: payment.status
+    }
+  end
+
   private
 
   def create
