@@ -1,0 +1,80 @@
+' Se estiver usando VSCode, instale a extensão PlantUML Viewer para visualizar o diagrama UML
+' Se não conseguir usar a extensão PlantUML Viewer, pegue o conteúdo do arquivo e utilize o site
+' https://www.planttext.com/ para visualizar este diagrama UML
+@startuml
+skinparam classAttributeIconSize 0
+
+' Interfaces / classes base
+class Message {
+  + message()
+}
+
+abstract class GreetingMessage {
+  + initialize()
+  + message()
+}
+
+abstract class HelpMessage {
+  + initialize()
+  + message()
+}
+
+interface MessageFactory {
+  + create_greeting_message()
+  + create_help_message()
+}
+
+' Fábricas concretas
+class EnglishMessageFactory {
+  + initialize()
+  + create_greeting_message()
+  + create_help_message()
+}
+
+class PortugueseMessageFactory {
+  + initialize()
+  + create_greeting_message()
+  + create_help_message()
+}
+
+' Produtos concretos Greeting
+class GreetingEnglishMessage {
+  + initialize()
+  + message()
+}
+
+class GreetingPortugueseMessage {
+  + initialize()
+  + message()
+}
+
+' Produtos concretos Help
+class HelpEnglishMessage {
+  + initialize()
+  + message()
+}
+
+class HelpPortugueseMessage {
+  + initialize()
+  + message()
+}
+
+' Relações
+Message <|-- GreetingMessage
+Message <|-- HelpMessage
+
+GreetingMessage <|-- GreetingEnglishMessage
+GreetingMessage <|-- GreetingPortugueseMessage
+
+HelpMessage <|-- HelpEnglishMessage
+HelpMessage <|-- HelpPortugueseMessage
+
+MessageFactory <|.. EnglishMessageFactory
+MessageFactory <|.. PortugueseMessageFactory
+
+EnglishMessageFactory --> GreetingEnglishMessage : creates
+EnglishMessageFactory --> HelpEnglishMessage : creates
+
+PortugueseMessageFactory --> GreetingPortugueseMessage : creates
+PortugueseMessageFactory --> HelpPortugueseMessage : creates
+@enduml
