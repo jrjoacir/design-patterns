@@ -1,3 +1,6 @@
+' Se estiver usando VSCode, instale a extensão PlantUML Viewer para visualizar o diagrama UML
+' Se não conseguir usar a extensão PlantUML Viewer, pegue o conteúdo do arquivo e utilize o site
+' https://www.planttext.com/ para visualizar este diagrama UML
 @startuml
 skinparam classAttributeIconSize 0
 
