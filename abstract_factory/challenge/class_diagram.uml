@@ -1,0 +1,122 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' ========================
+' Abstrações / Interfaces
+' ========================
+
+interface HealthyServiceFactory {
+  + initialize()
+  + create_appointment()
+  + create_invoice()
+}
+
+abstract class Appointment {
+  + initialize()
+  - validate!()
+  - validate_date_time!()
+  - validate_local!()
+  - validate_service_type!()
+  - validate_specialty!()
+}
+
+abstract class Invoice {
+  + initialize()
+  + total_value()
+  - validate!()
+  - validate_value!()
+  - validate_payment_method!()
+  - validate_tax!()
+}
+
+' ========================
+' Implementações de Appointment
+' ========================
+
+class SiteAppointment {
+  - validate_local!()
+  - validate_service_type!()
+  - validate_specialty!()
+}
+
+class OnlineAppointment {
+  - validate_local!()
+  - validate_service_type!()
+  - validate_specialty!()
+  - available_online_services()
+}
+
+class HomeAppointment {
+  - validate_local!()
+  - validate_service_type!()
+  - validate_specialty!()
+}
+
+' ========================
+' Implementações de Invoice
+' ========================
+
+class SiteInvoice {
+  + initialize()
+  - payment_method_availables()
+  - validate_payment_method!()
+}
+
+class OnlineInvoice {
+  + initialize()
+  - payment_method_availables()
+  - validate_payment_method!()
+}
+
+class HomeInvoice {
+  + initialize()
+  - payment_method_availables()
+  - validate_payment_method!()
+}
+
+' ========================
+' Fábricas Concretas
+' ========================
+
+class SiteHealthyServiceFactory {
+  + create_appointment()
+  + create_invoice()
+}
+
+class OnlineHealthyServiceFactory {
+  + create_appointment()
+  + create_invoice()
+}
+
+class HomeHealthyServiceFactory {
+  + create_appointment()
+  + create_invoice()
+}
+
+' ========================
+' Relações / Heranças
+' ========================
+
+HealthyServiceFactory <|.. SiteHealthyServiceFactory
+HealthyServiceFactory <|.. OnlineHealthyServiceFactory
+HealthyServiceFactory <|.. HomeHealthyServiceFactory
+
+Appointment <|.. SiteAppointment
+Appointment <|.. OnlineAppointment
+Appointment <|.. HomeAppointment
+
+Invoice <|.. SiteInvoice
+Invoice <|.. OnlineInvoice
+Invoice <|.. HomeInvoice
+
+' Fábricas criam produtos concretos (associação com rótulos)
+SiteHealthyServiceFactory --> SiteAppointment : creates
+SiteHealthyServiceFactory --> SiteInvoice : creates
+
+OnlineHealthyServiceFactory --> OnlineAppointment : creates
+OnlineHealthyServiceFactory --> OnlineInvoice : creates
+
+HomeHealthyServiceFactory --> HomeAppointment : creates
+HomeHealthyServiceFactory --> HomeInvoice : creates
+
+@enduml
