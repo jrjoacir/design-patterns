@@ -1,0 +1,154 @@
+' Se estiver usando VSCode, instale a extensão PlantUML Viewer para visualizar o diagrama UML
+' Se não conseguir usar a extensão PlantUML Viewer, pegue o conteúdo do arquivo e utilize o site
+' https://www.planttext.com/ para visualizar este diagrama UML
+@startuml
+title Padrão Builder - Exercício Sandwich (corrigido conforme código)
+
+' Produto
+class Sandwich {
+  +initialize(ingredients = [])
+  +add_ingredient(ingredient)
+  +to_s()
+  -validate_ingredient(ingredient)
+  -@ingredients: Array
+}
+
+' Classe base para Ingredientes
+abstract class Ingredient {
+  +to_s()
+}
+
+' Ingredientes concretos
+class BriocheBread
+class FrenchBread
+class HotdogBread
+class Beef
+class ChickenFillet
+class Sausage
+class Cheese
+class Bacon
+class Lettuce
+class Tomato
+class Pea
+class Corn
+class PotatoPuree
+class ShoestringPotato
+
+Ingredient <|-- BriocheBread
+Ingredient <|-- FrenchBread
+Ingredient <|-- HotdogBread
+Ingredient <|-- Beef
+Ingredient <|-- ChickenFillet
+Ingredient <|-- Sausage
+Ingredient <|-- Cheese
+Ingredient <|-- Bacon
+Ingredient <|-- Lettuce
+Ingredient <|-- Tomato
+Ingredient <|-- Pea
+Ingredient <|-- Corn
+Ingredient <|-- PotatoPuree
+Ingredient <|-- ShoestringPotato
+
+' Interface / módulo Builder (definição das etapas possíveis)
+abstract class SandwichBuilder {
+  +reset()
+  +build_brioche_bread()
+  +build_french_bread()
+  +build_beef()
+  +build_lettuce()
+  +build_tomato()
+  +build_cheese()
+  +build_bacon()
+  +build_chicken_fillet()
+  +build_hotdog_bread()
+  +build_sausage()
+  +build_pea()
+  +build_corn()
+  +build_potato_puree()
+  +build_shoestring_potato()
+}
+
+' Builders concretos
+class BurguerSandwichBuilder {
+  +initialize()
+  +reset()
+  +build_brioche_bread()
+  +build_beef()
+  +build_cheese()
+  +build_bacon()
+  +build_lettuce()
+  +build_tomato()
+  +make()
+  -@ingredients: Array
+}
+
+class ChickenSandwichBuilder {
+  +initialize()
+  +reset()
+  +build_french_bread()
+  +build_chicken_fillet()
+  +build_lettuce()
+  +build_tomato()
+  +make()
+  -@ingredients: Array
+}
+
+class HotdogSandwichBuilder {
+  +initialize()
+  +reset()
+  +build_hotdog_bread()
+  +build_sausage()
+  +build_pea()
+  +build_corn()
+  +build_potato_puree()
+  +build_shoestring_potato()
+  +make()
+  -@ingredients: Array
+}
+
+SandwichBuilder <|-- BurguerSandwichBuilder
+SandwichBuilder <|-- ChickenSandwichBuilder
+SandwichBuilder <|-- HotdogSandwichBuilder
+
+' Director
+class Chef {
+  +initialize(sandwich_builder)
+  +make_simple_burger()
+  +make_salad_burguer()
+  +make_cheese_burguer()
+  +make_cheese_bacon_burguer()
+  +make_double_cheese_burguer()
+  +make_double_cheese_bacon_burguer()
+  +make_simple_chicken()
+  +make_salad_chicken()
+  +make_double_salad_chicken()
+  +make_complete_hotdog()
+  -sandwich_builder
+}
+
+' Sanduíches concretos (produtos específicos)
+class BurguerSandwich {
+  -ALLOWED_INGREDIENTS
+  -validate_ingredient(ingredient)
+}
+class ChickenSandwich {
+  -ALLOWED_INGREDIENTS
+  -validate_ingredient(ingredient)
+}
+class HotdogSandwich {
+  -ALLOWED_INGREDIENTS
+  -validate_ingredient(ingredient)
+}
+
+Sandwich <|-- BurguerSandwich
+Sandwich <|-- ChickenSandwich
+Sandwich <|-- HotdogSandwich
+
+' Relações de criação e uso
+BurguerSandwichBuilder --> BurguerSandwich : creates
+ChickenSandwichBuilder --> ChickenSandwich : creates
+HotdogSandwichBuilder --> HotdogSandwich : creates
+
+Chef --> SandwichBuilder : uses
+
+@enduml
