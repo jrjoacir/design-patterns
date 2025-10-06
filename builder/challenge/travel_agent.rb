@@ -5,8 +5,6 @@ class TravelAgent
   INSURANCE_TYPES = [ :comprehensive, :medical, :travel, :trip ]
   TRIP_TYPES = [ :city_tour ]
 
-
-
   def initialize(package_builder)
     @package_builder = package_builder
   end
@@ -25,7 +23,14 @@ class TravelAgent
     package_builder.build_city_tour_trip
   end
 
-  def make_personalized_package(transport_type:, meal_plan_type:, insurance_type:, trip_type:, accommodation_type:, accommodation_stars:)
+  def make_personalized_package(
+    transport_type: nil,
+    meal_plan_type: nil,
+    insurance_type: nil,
+    trip_type: nil,
+    accommodation_type: nil,
+    accommodation_stars: nil
+  )
     transport_type && build_transport(transport_type)
     accommodation_type && build_accommodation(accommodation_type, accommodation_stars)
     meal_plan_type && build_meal_plan(meal_plan_type)

@@ -51,12 +51,12 @@ class Main
 end
 
 puts economic_package = Main.new.make_economic_package
-puts economic_package.items
+puts economic_package.to_h
 puts economic_package.to_s
 puts
 
 puts lux_package = Main.new.make_lux_package
-puts lux_package.items
+puts lux_package.to_h
 puts
 
 personalized_package_builder = PersonalizedPackageBuilder.new
@@ -69,5 +69,5 @@ TravelAgent.new(personalized_package_builder).make_personalized_package(
   accommodation_stars: 4
 )
 puts personalized_package = personalized_package_builder.make
-puts personalized_package.items
+puts personalized_package.to_h
 puts

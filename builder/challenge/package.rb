@@ -10,7 +10,7 @@ class Package
     validate!
   end
 
-  def items
+  def to_h
     {
       accommodation: accommodation,
       insurance: insurance,
