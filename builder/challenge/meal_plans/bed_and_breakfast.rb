@@ -1,0 +1,2 @@
+class BedAndBreakfast < MealPlan
+end

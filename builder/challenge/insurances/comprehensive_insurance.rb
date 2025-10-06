@@ -1,0 +1,2 @@
+class ComprehensiveInsurance < Insurance
+end

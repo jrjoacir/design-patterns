@@ -1,0 +1,2 @@
+class MedicalInsurance < Insurance
+end

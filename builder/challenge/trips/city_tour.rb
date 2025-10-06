@@ -1,0 +1,2 @@
+class CityTour < Trip
+end

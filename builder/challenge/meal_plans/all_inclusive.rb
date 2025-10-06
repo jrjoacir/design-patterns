@@ -1,0 +1,2 @@
+class AllInclusive < MealPlan
+end

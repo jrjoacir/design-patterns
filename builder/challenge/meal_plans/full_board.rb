@@ -1,0 +1,2 @@
+class FullBoard < MealPlan
+end
