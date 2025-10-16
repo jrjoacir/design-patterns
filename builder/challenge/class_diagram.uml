@@ -1,0 +1,209 @@
+' Se estiver usando VSCode, instale a extensão PlantUML Viewer para visualizar o diagrama UML
+' Se não conseguir usar a extensão PlantUML Viewer, pegue o conteúdo do arquivo e utilize o site
+' https://www.planttext.com/ para visualizar este diagrama UML
+@startuml
+skinparam classAttributeIconSize 0
+title Builder Pattern - Challenge (com relacionamentos avançados)
+
+' ===========================
+' === Domínio principal ====
+' ===========================
+
+class Package {
+  - accommodation
+  - insurance
+  - meal_plan
+  - transport
+  - trips
+  + initialize()
+  + items()
+  + validate!()
+  + validate_meal_plan!()
+  + validate_trips!()
+  + validate_insurance!()
+}
+
+class Accommodation
+class Hotel
+class Hostel
+Accommodation <|-- Hotel
+Accommodation <|-- Hostel
+
+class Transport
+class Plane
+class Bus
+class Train
+Transport <|-- Plane
+Transport <|-- Bus
+Transport <|-- Train
+
+class MealPlan
+class AllInclusive
+class FullBoard
+class HalfBoard
+class BedAndBreakfast
+MealPlan <|-- AllInclusive
+MealPlan <|-- FullBoard
+MealPlan <|-- HalfBoard
+MealPlan <|-- BedAndBreakfast
+
+class Insurance
+class ComprehensiveInsurance
+class MedicalInsurance
+class TravelInsurance
+class TripInsurance
+Insurance <|-- ComprehensiveInsurance
+Insurance <|-- MedicalInsurance
+Insurance <|-- TravelInsurance
+Insurance <|-- TripInsurance
+
+class Trip
+class CityTour
+Trip <|-- CityTour
+
+
+' ===========================
+' === Módulos do Builder ====
+' ===========================
+
+package "Builder Modules" {
+  class AccommodationBuilder {
+    + build_hostel_accommodation()
+    + build_five_stars_hotel()
+  }
+
+  class TransportBuilder {
+    + build_plane_transport()
+    + build_bus_transport()
+    + build_train_transport()
+  }
+
+  class MealPlanBuilder {
+    + build_all_inclusive_meal_plan()
+    + build_half_board_meal_plan()
+  }
+
+  class InsuranceBuilder {
+    + build_travel_insurance()
+    + build_medical_insurance()
+    + build_comprehensive_insurance()
+    + build_trip_insurance()
+  }
+
+  class TripBuilder {
+    + build_city_tour_trip()
+  }
+
+  class PackageBuilderModule <<module>> {
+    ' inclui todos os módulos acima
+  }
+  PackageBuilderModule ..> AccommodationBuilder
+  PackageBuilderModule ..> TransportBuilder
+  PackageBuilderModule ..> MealPlanBuilder
+  PackageBuilderModule ..> InsuranceBuilder
+  PackageBuilderModule ..> TripBuilder
+}
+
+' ===========================
+' === Builders concretos ====
+' ===========================
+
+class PersonalizedPackageBuilder {
+  - items
+  + initialize()
+  + reset()
+  + build_bus_transport()
+  + build_plane_transport()
+  + build_train_transport()
+  + build_hostel_accommodation()
+  + build_five_stars_hotel()
+  + build_all_inclusive_meal_plan()
+  + build_half_board_meal_plan()
+  + build_travel_insurance()
+  + build_medical_insurance()
+  + build_comprehensive_insurance()
+  + build_trip_insurance()
+  + build_city_tour_trip()
+  + make() : Package
+}
+PersonalizedPackageBuilder ..> PackageBuilderModule
+PersonalizedPackageBuilder --> Package
+PersonalizedPackageBuilder --> Transport
+PersonalizedPackageBuilder --> Accommodation
+PersonalizedPackageBuilder --> MealPlan
+PersonalizedPackageBuilder --> Insurance
+PersonalizedPackageBuilder --> Trip
+
+class EconomicPackageBuilder {
+  + make() : Package
+  + reset()
+}
+EconomicPackageBuilder ..> PackageBuilderModule
+EconomicPackageBuilder --> Package
+
+class LuxPackageBuilder {
+  + make() : Package
+  + reset()
+}
+LuxPackageBuilder ..> PackageBuilderModule
+LuxPackageBuilder --> Package
+
+
+' ===========================
+' === Director ==============
+' ===========================
+
+class TravelAgent {
+  - package_builder
+  + initialize(package_builder)
+  + make_economic_package()
+  + make_lux_package()
+  + make_personalized_package(
+      transport_type, 
+      meal_plan_type, 
+      insurance_type, 
+      trip_type, 
+      accommodation_type, 
+      accommodation_stars)
+  - build_transport()
+  - build_insurance()
+  - build_trip()
+}
+TravelAgent --> PersonalizedPackageBuilder
+TravelAgent --> EconomicPackageBuilder
+TravelAgent --> LuxPackageBuilder
+TravelAgent --> Package
+
+
+' ===========================
+' === Cliente (main) ========
+' ===========================
+
+class Main << (M,#ADD1) >> {
+  + demo()
+}
+Main --> TravelAgent
+
+
+' ===========================
+' === Notas =================
+' ===========================
+
+note right of Package
+Validações de regra de negócio:
+- MealPlan exige Accommodation
+- Trips exigem Transport
+- Insurance só permitido se Transport for Bus ou Plane
+end note
+
+note bottom of TravelAgent
+Responsável por orquestrar a criação
+dos pacotes via Builders concretos.
+end note
+
+note right of PersonalizedPackageBuilder
+Permite montagem flexível e parcial
+dos elementos do pacote.
+end note
+
+@enduml
